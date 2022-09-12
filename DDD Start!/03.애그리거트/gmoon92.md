@@ -3,8 +3,8 @@
 - [애그리거트](#애그리거트)
 - [애그리거트 루트](#애그리거트-루트)
 - [도메인 규칙과 일관성](#도메인-규칙과-일관성)
-  - [애그리거트 루트의 기능 구현](#애그리거트-루트의-기능-구현)
-  - [트랜잭션 범위](#트랜잭션-범위)
+    - [애그리거트 루트의 기능 구현](#애그리거트-루트의-기능-구현)
+    - [트랜잭션 범위](#트랜잭션-범위)
 - [리포지터리와 애그리거트](#리포지터리와-애그리거트)
 - [ID를 이용한 애그리거트 참조](#ID를-이용한-애그리거트-참조)
 - [ID를 이용한 참조와 조회 성능](#ID를-이용한-참조와-조회-성능)
@@ -19,7 +19,7 @@
 - 도메인 모델의 개별 구성요소 위주로 이해하면, 전반적인 시스템의 구조를 파악하기 어렵다.
 - 큰 수준에서 도메인 간의 관계를 파악해야 한다.
 - 주요 도메인 개념 간의 관계를 파악하는데 용이하다.
-  - 장기적인 관점에서 코드 유지보수 및 코드 수정과 기능 확장성에 도움이 된다.
+    - 장기적인 관점에서 코드 유지보수 및 코드 수정과 기능 확장성에 도움이 된다.
 
 애그리거트는 복잡한 도메인을 이해하고 관리하기 쉬운 단위로 구성하는 과정이다.
 
@@ -35,12 +35,12 @@
 
 - 한 애그리거트에 속한 객체는 다른 애그리거트에 속하지 않는다.
 - 애그리거트는 독립된 객체 군이다.
-- 각 애그리거트는 자기 자신을 관리할 뿐 다른 애그리거를 관리하지 않는다.
+- 각 애그리거트는 자기 자신을 관리할 뿐 다른 애그리거트를 관리하지 않는다.
 - 기본적으로 경계를 설정할 때 도메인 규칙과 요구사항을 기반으로 설정한다.
-  - A가 B를 갖는다.
-  - 함께 생성되고 변경된다.
-  - 도메인을 변경할 때, 함께 변경되는 도메인을 한 애그리거트에 묶는다. 
-  - 도메인 규칙에 따라 함께 생성되는 구성요소는 한 애그리거트에 속할 가능성이 높다.
+    - A가 B를 갖는다.
+    - 함께 생성되고 변경된다.
+    - 도메인을 변경할 때, 함께 변경되는 도메인을 한 애그리거트에 묶는다.
+    - 도메인 규칙에 따라 함께 생성되는 구성요소는 한 애그리거트에 속할 가능성이 높다.
 - 동일한 라이프사이클이 아니라면 다른 애그리거트에 속할 가능성이 있다.
 
 ## 애그리거트 루트
@@ -62,8 +62,8 @@
 - 이를 위해 애그리거트 루트는 애그리거트가 제공해야 할 도메인 기능을 구한한다.
 - 제공하는 도메인 기능은 도메인 규칙을 기반으로 한다.
 - 애그리거트 루트가 아닌 다른 객체가 애그리거트에 속한 객체를 직접 변경하면 안된다.
-  - 애그리거트 루트가 강제하는 규칙을 적용할 수 없어 모델의 일관성을 깨는 원인이 된다.
-  - 중복 코드 구현 위험 가능성을 높힌다.
+    - 애그리거트 루트가 강제하는 규칙을 적용할 수 없어 모델의 일관성을 깨는 원인이 된다.
+    - 중복 코드 구현 위험 가능성을 높힌다.
 
 불필요한 중복을 피하고 애그리거트 루트를 통해서만 도메인 로직을 구현하게 만들려면 도메인 모델에 대해 다음 두 가지를 습관적으로 적용해야 한다.
 
@@ -87,23 +87,23 @@
 
 - DB 테이블을 기준으로 한 트랜잭션이 한 개 테이블을 수정하는 것이 성능상 좋다.
 - 동일하게 한 트랜잭션에서는 한 개의 애그리거트만 수정해야 한다.
-  -  두 개 이상의 애그리거트를 수정하면 트랜잭션 충돌이 발생할 가능성이 더 높아진다.
+    - 두 개 이상의 애그리거트를 수정하면 트랜잭션 충돌이 발생할 가능성이 더 높아진다.
 - 한 트랜잭션에서 한 애그리거트만 수정한다는 것은 애그리거트에서 다른 애그리거트를 변경하지 않는다는 뜻이다.
 - 부득이하게 한 트랜잭션으로 두 개 이상의 애그리거트를 수정해야 한다면 응용 계층(서비스)에서 두 애그리거트를 수정하도록 구현해야 한다.
-  - 애그리거트에서 다른 애그리거트를 직접 수정하지 않는다.
+    - 애그리거트에서 다른 애그리거트를 직접 수정하지 않는다.
 
 한 트랜잭션에서 두 개 이상의 애그리거트를 변경하는 것을 고려할 수 있다.
 
 - 팀 표준: 팀이나 조직의 표준에 따라 사용자 유스케이스와 관련된 응용 서비스의 기능을 한 트랜잭션으로 실행해야 하는 겅우, 또는 DB가 다른 경우 글로벌 트랜잭션을 반드시 사용하도록 규칙을 정하는 곳도 있다.
-- 기술 제약: 한 트랜잭션에서 두 개 이상의 애그리거트를 수정하는 대신 도메인 이벤트와 비동기를 사용하는 방식을 사용하는 데, 기술적으로 이벤트 방식을 도입할 수 없는 경우 트랜잭션에서 다수의 애그리거트를 수정해서 일관성을 처리해야 하낟.
-- UI 구현의 편리: 운영자의 편리함을 위해 기획상 다른 애그리거트를 한번에 변경해야되는 경우
+- 기술 제약: 한 트랜잭션에서 두 개 이상의 애그리거트를 수정하는 대신 도메인 이벤트와 비동기를 사용하는 방식을 사용하는 데, 기술적으로 이벤트 방식을 도입할 수 없는 경우 트랜잭션에서 다수의 애그리거트를 수정해서 일관성을 처리해야 한다.
+- UI 구현의 편리: 운영자의 편리함을 위해, 기획상 다른 애그리거트를 한번에 변경해야 되는 경우
 
 ## 리포지터리와 애그리거트
 
 애그리거트는 개념상 완전한 한 개의 도메인 모델을 표현하므로 객체의 영속성을 처리하는 리포지터리는 애그리거트 단위로 존재한다.
 
 - 애그리거트 루트의 리포지토리만 존재한다.
-- 별도의 테이블에 저장한다고 각각의 리포지터리를 구현하지 않는다.
+- 루트 엔티티와 연관된 각각의 엔티티가 별도의 테이블에 저장한다고 각각의 리포지터리를 구현하지 않는다.
 
 애그리거트 루트 리포지터리는 적어도 다음 두 메서드를 제공한다.
 
@@ -123,7 +123,7 @@
 
 ```java
 class Order {
-    
+
     // 회원 애그리거트 루트인 Member 객체 참조
     private Member member;
 } 
@@ -139,22 +139,22 @@ class Order {
 
 - 각 애그리거트는 자신의 라이프사이클을 관리한다. 다른 애그리거트의 변경을 관리하지 않는다.
 - 트랜잭션 범위는 작게 설정한다.
-  - 각 애그리거트당 하나의 트랜잭션 범위로 지정한다.
+    - 각 애그리거트당 하나의 트랜잭션 범위로 지정한다.
 - 애그리거트 간의 의존 결합도를 높힌다.
 - JPA의 객체 그래프 탐색으로 인해 글로벌 패치 전략(lazy, eager)을 고려해야 한다.
 - 확장의 문제
-  - 트래픽 증가로 인해, 특정 애그리거트를 시스템적으로 분리해야할 경우, 각 애그리거트의 인프라스트럭처 구현 기능이 달라질 가능성이 있다. 
-    - 예를 들어 몽고DB 를 사용하는 경우, 오라클 또는 MySql을 사용하는 프로젝트 등등 
+    - 트래픽 증가로 인해, 특정 애그리거트를 시스템적으로 분리해야할 경우, 각 애그리거트의 인프라스트럭처 구현 기능이 달라질 가능성이 있다.
+        - 예를 들어 몽고DB 를 사용하는 경우, 오라클 또는 MySql을 사용하는 프로젝트 등등
 
 ```java
 class Order {
-    
+
     // 회원 애그리거트 루트 ID 로 식별
     private MemberId memberId;
-} 
+}
 
 class Member {
-    
+
     private MemberId id;
 } 
 ```
@@ -167,11 +167,11 @@ class Member {
 - 애그리거트 간 물리적인 연결을 제거하기 때문에 모델의 복잡도를 낮춰준다.
 - 애그리거트 간의 의존을 제거하므로 응집도를 높여준다.
 - 구현의 복잡도도 낮아진다.
-  - JPA의 글로벌 패치전략을 고민할 필요가 없다.
-  - 응용 계층에서 참조할 다른 애그리거트 루트를 조회하면 된다.
-  - 필요한 애그리거트를 사용하는 시점에 조회함으로 지연 로딩의 효과와 동일하다.
+    - JPA의 글로벌 패치 전략을 고민할 필요가 없다.
+    - 응용 계층에서 참조할 다른 애그리거트 루트를 조회하면 된다.
+    - 필요한 애그리거트를 사용하는 시점에 조회함으로 지연 로딩의 효과와 동일하다.
 - 애그리거트 간의 의존도가 낮음으로 복잡도를 낮추는 것과 함께 다른 애그리거트를 직접 수정하는 문제를 원천적으로 방지할 수 있다.
-- 애그리거트별로 다른 인프라스트럭츠 계층을 구성할 수 있다.
+- 각각의 애그리거트는 다른 인프라스트럭츠 계층으로 구성할 수 있다.
 
 ## ID를 이용한 참조와 조회 성능
 
@@ -196,12 +196,12 @@ N+1 조회와 같은 문제가 발생하지 않도록 하려면 `전용 조회 �
 ```java
 public class Category {
 
-  private Set<Product> products;
+    private Set<Product> products;
 
-  public List<Product> getProducts(int page, int size) {
-    LIst<Product> sortedProducts = sortById(products);
-    return sortedProducts.subList((page - 1) * size, page * size);
-  }
+    public List<Product> getProducts(int page, int size) {
+        LIst<Product> sortedProducts = sortById(products);
+        return sortedProducts.subList((page - 1) * size, page * size);
+    }
 }
 ```
 
@@ -215,6 +215,7 @@ public class Category {
 
 ```java
 public class Product {
+
     // 성능 이슈로 조회 주체가 상품으로 변경
     // 1:N이 아닌 단방향으로 N:1 로 설계
     private CategoryId category;
@@ -222,14 +223,14 @@ public class Product {
 
 public class ProductListService {
 
-  public Page<Product> getProductOfCategory(Long categoryId, int page, int size) {
-    Category category = categoryRepository.findById(categoryId);
-    checkCategory(category);
+    public Page<Product> getProductOfCategory(Long categoryId, int page, int size) {
+        Category category = categoryRepository.findById(categoryId);
+        checkCategory(category);
 
-    List<Product> products = productRepository.findByCategoryId(category.getId(), page, size);
-    int totalCount = productRepository.countByCategoryId(category.getId());
-    return new Page(page, size, totalCount, products);
-  }
+        List<Product> products = productRepository.findByCategoryId(category.getId(), page, size);
+        int totalCount = productRepository.countByCategoryId(category.getId());
+        return new Page(page, size, totalCount, products);
+    }
 
 }
 ```
@@ -237,23 +238,24 @@ public class ProductListService {
 M:N 연관 구현은 조인 테이블을 활용하여 구현한다.
 
 ```java
+
 @Entity
 @Table(name = "product")
 public class Product {
 
-  @EmbeddedId
-  private ProductId id;
+    @EmbeddedId
+    private ProductId id;
 
-  @ElementCollection
-  @CollectionsTable(name = "product_category",
-          joinColumns = @JoinColumn(name = "product_id"))
-  private Set<CategoryId> categoryIds;
+    @ElementCollection
+    @CollectionsTable(name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"))
+    private Set<CategoryId> categoryIds;
 }
 ```
 
 ## 애그리거트를 팩토리로 사용하기
 
-응용 계층엔 도메인의 중요한 로직을 반영한 코드를 추가하지 않는다.
+응용 계층엔 도메인의 중요한 로직을 반영하지 않는다.
 
 - 논리적으로 하나의 도메인 기능인데 응용 서비스에 구현하는 것이다.
 - 별도의 도메인 서비스나 팩토리 클래스를 구현한다.
@@ -262,12 +264,12 @@ public class Product {
 ```java
 public class Store extends Member {
 
-  public Product createProduct(ProductId newProductId, ...) {
-    if (isBlocked()) {
-      throw new StoreBlockedException();
+    public Product createProduct(ProductId newProductId, ...) {
+        if (isBlocked()) {
+            throw new StoreBlockedException();
+        }
+
+        return new Product(newProductId, getId(),...);
     }
-    
-    return new Product(newProductId, getId() ,...);
-  }
 }
 ```
