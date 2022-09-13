@@ -15,7 +15,7 @@
 
 한 애그리거트를 두 사용자가 거의 동시에 변경할 때 트랜잭션이 필요하다.
 
-트랜잭션의 동시성 제어의 문제는 다음과 같다.
+트랜잭션의 동시성 제어 문제는 다음과 같다.
 
 - 두 사용자가 동시에 애그리거트의 상태를 수정한다.
 - 애그리거트 조회 기능은 캐시가 적용되어 있지 않다.
@@ -85,18 +85,22 @@ Order oder = entityManager.find(Order.class, orderNo, LockModeType.PESSIMISTIC_W
 
 - `javax.persistence.lock.timeout`
 
-```html
-Map
-<String, Object> hints = new HashMap<>();
-// ms 단위
-hints.put("javax.persistence.lock.timeout", 2000);
+```java
+public class SampleRepository {
 
-Order oder = entityManager.find(
-Order.class,
-orderNo,
-LockModeType.PESSIMISTIC_WRITE,
-hints
-);
+    public void findByPessimisticLock() {
+        Map<String, Object> hints = new HashMap<>();
+        // ms 단위
+        hints.put("javax.persistence.lock.timeout", 2000);
+
+        Order oder = entityManager.find(
+                Order.class,
+                orderNo,
+                LockModeType.PESSIMISTIC_WRITE,
+                hints
+        );
+    }
+}
 ```
 
 선점 잠금을 사용하려면 사용하는 DBMS에 대해 JPA가 어떤 식으로 대기 시간을 처리하는지 반드시 확인해야 한다.
@@ -123,8 +127,7 @@ WHERE agg.id = :id
 
 - @Version
 
-비선점 잠금은 쿼리 실행 결과로 수정된 행의 개수가 0이면 이미 누군가 앞서 데이터를 수정한 것으로, 트랜잭션이 충돌한 것으로 간주한다. 트랜잭션 종료
-시점에 `OptimisticLockingFailureException` 예외가 발생한다.
+비선점 잠금은 쿼리 실행 결과로 수정된 행의 개수가 0이면 이미 누군가 앞서 데이터를 수정한 것으로, 트랜잭션이 충돌한 것으로 간주한다. 트랜잭션 종료 시점에 `OptimisticLockingFailureException` 예외가 발생한다.
 
 ## 강제 버전 증가
 
@@ -167,11 +170,8 @@ public interface LockManager {
 
     // type: 잠글 대상
     LockId tryLock(String type, String id) throws LockException;
-
     void checkLock(LockId lockId) throws LockException;
-
     void releaseLock(LockId lockId) throws LockException;
-
     void extendLockExpiration(LockId lockId, long inc) throws LockException;
 }
 
@@ -305,7 +305,7 @@ public class SpringLockManager implements LockManager {
             return Optional.empty();
         }
         
-        // 유효 시간이 지난 잠금 데이터 사제
+        // 유효 시간이 지난 잠금 데이터 삭제
         Locks result = locks.get(0);
         if (result.isExpired()) {
             delete(result);
