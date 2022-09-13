@@ -8,3 +8,4 @@
 | 04  | 리포지터리와 모델구현(JPA 중심)  | [gmoon92](https://github.com/gmoon92/read-books-for-programmers/blob/main/DDD%20Start!/04.%20%EB%A6%AC%ED%8F%AC%EC%A7%80%ED%84%B0%EB%A6%AC%EC%99%80%20%EB%AA%A8%EB%8D%B8%EA%B5%AC%ED%98%84(JPA%20%EC%A4%91%EC%8B%AC)/gmoon92.md) |
 | 05  | 리포지터리의 조회 기능(JPA 중심) | [gmoon92](https://github.com/gmoon92/read-books-for-programmers/blob/main/DDD%20Start!/05.%20%EB%A6%AC%ED%8F%AC%EC%A7%80%ED%84%B0%EB%A6%AC%EC%9D%98%20%EC%A1%B0%ED%9A%8C%20%EA%B8%B0%EB%8A%A5(JPA%20%EC%A4%91%EC%8B%AC)/gmoon92.md) |
 | 06  | 응용 서비스와 표현 영역        | [gmoon92](https://github.com/gmoon92/read-books-for-programmers/blob/main/DDD%20Start!/06.%20%EC%9D%91%EC%9A%A9%20%EC%84%9C%EB%B9%84%EC%8A%A4%EC%99%80%20%ED%91%9C%ED%98%84%20%EC%98%81%EC%97%AD/gmoon92.md) |
+| 07  | 도메인 서비스        | [gmoon92](https://github.com/gmoon92/read-books-for-programmers/blob/main/DDD%20Start!/07.%20%EB%8F%84%EB%A9%94%EC%9D%B8%20%EC%84%9C%EB%B9%84%EC%8A%A4/gmoon92.md) |
