@@ -40,7 +40,7 @@
 
 BOUNDED CONTEXT는 모델의 경계를 결정한다.
 
-- BOUNDED CONTEXT 는 실제로 사용자에게 기능을 제공하는 물리적 시스템으로, 도메인 모델은 BOUNDED CONTEXT 안에서 도메인을 구현한다.
+- BOUNDED CONTEXT 는 실제로 사용자에게 기능을 제공하는 `물리적 시스템`으로, 도메인 모델은 BOUNDED CONTEXT 안에서 도메인을 구현한다.
 - 한 개의 BOUNDED CONTEXT는 논리적으로 한 개의 모델을 갖는다.
 - BOUNDED CONTEXT는 용어를 기준으로 구분한다.
   - 카탈로그 컨텍스트와 재고 컨텍스트는 서로 다른 용어를 사용하므로 용어 기준으로 컨텍스트를 분리할 수 있다.
@@ -50,9 +50,9 @@ BOUNDED CONTEXT는 모델의 경계를 결정한다.
 ![Start DDD!](/img/start-ddd/bounded-context.png)
 
 - 이상적으로 하위 도메인과 BOUNDED CONTEXT가 일대일 관계를 가지면 좋겠지만 현실은 그렇지 않을 때가 많다.
-- 하나의 Bounded Context 는 하나의 팀에만 할당되어야 한다.
-  - 하나의 팀은 여러 개의 Bounded Context를 다룰 수 있다.
-- 각각의 Bounded Context는 각각의 개발 환경을 가질 수 있다.
+- 하나의 BOUNDED CONTEXT 는 하나의 팀에만 할당되어야 한다.
+  - 하나의 팀은 여러 개의 BOUNDED CONTEXT를 다룰 수 있다.
+- 각각의 BOUNDED CONTEXT는 각각의 개발 환경을 가질 수 있다.
 - 용어를 명확하게 하지 못해 두 하위 도메인을 한 BOUNDED CONTEXT 에서 구현하기도 한다.
 
 여러 하위 도메인을 한 개의 BOUNDED CONTEXT에서 구현할 수도 있다.
@@ -146,7 +146,7 @@ MSA와 BOUNDED CONTEXT
 - 하류(downstream) 컴포넌트
   - 데이터를 받는 주체
   - 서비스 사용자 역할
-  - 안티코럽션 계층(ACL, Anticorruption Layer)
+  - 안티코럽션 계층(ACL, Anti-corruption Layer)
     - 각 BOUNDED CONTEXT 모델을 변환하는 작업을 한다. 자신의 도메인 모델을 침범하지 않도록 막아주는 역할
     - 상류 서비스의 모델이 자신의 도메인 모델에 영향을 주지 않도록 보호해 주는 완충 지대를 만들어야 한다.
 
@@ -163,7 +163,7 @@ MSA와 BOUNDED CONTEXT
 
 마지막으로 살펴볼 관계는 독립 방식(SEPERATE WAY) 관계다.
 
-- 독립 방식(SEPERATE WAY) 관계
+- 독립 방식(SEPARATE WAY) 관계
   - 그냥 서로 통합하지 않는 방식이다.
   - 두 BOUNDED CONTEXT 간에 통합을 하지 않으므로 서로 독립적으로 모델을 발전시킨다.
   - 독립 방식에서 통합은 수동으로 이뤄진다.
@@ -182,9 +182,9 @@ MSA와 BOUNDED CONTEXT
   - 하류 컴포넌트와 상류 컴포넌트 관계
     - 오픈 호스트 서비스(OHS)와 안티코럽션 계층(ACL)
   - 공유 커널(SHARED KERNEL)이 존재하는 관계
-  - 독립 방식(SEPERATE WAY) 관계
+  - 독립 방식(SEPARATE WAY) 관계
 - BOUNDED CONTEXT 영역에 주요 애그리거트를 함께 표시하여 모델에 대한 관계를 명확히 드러나도록 한다.
-- BOUNDED CONTEXT의 하위 도메인이나 조직 구조를 함께 표시하면 도메인을 포함한 전체 꽌계를 이해하는 데 도움이 된다.
+- BOUNDED CONTEXT의 하위 도메인이나 조직 구조를 함께 표시하면 도메인을 포함한 전체 관계를 이해하는 데 도움이 된다.
 
 컨텍스트 맵은 시스템의 전체 구조를 보여준다.
 
