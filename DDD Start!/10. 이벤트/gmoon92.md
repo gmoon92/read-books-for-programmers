@@ -182,7 +182,8 @@ public class ShippingInfoChangedHandler
 ## 이벤트 클래스
 
 - 이벤트 자체를 위한 상위 타입은 존재하지 않는다.
-  - 예외적으로 모든 이벤트가 공통으로 갖는 프로퍼티가 존재한다면 관련 상위 클래스를 구성할 수 있다. ex. 이벤트 발생 시간
+  - 예외적으로 모든 이벤트가 공통으로 갖는 프로퍼티가 존재한다면 관련 상위 클래스를 구성할 수 있다. 
+    - ex) 이벤트 발생 시간
 - 이벤트 클래스 이름은 과거 시제로 사용해야 한다.
   - `Canceled`**`Event`**
     - 접미사로 Event를 사용해서 이벤트로 사용하는 클래스라는 것을 명시적으로 표현
@@ -198,21 +199,25 @@ public class ShippingInfoChangedHandler
 인프라스트럭처 영역과의 결합도를 낮추기 위해, 이벤트 핸들러는 별도의 인터페이스를 구성해야 한다.
 
 ```java
-public interface EventHandler<T> {
+public interface EventHandler<T extends EventHandler> {
 
     void handler(T event);
 
     // 핸들러가 이벤트를 처리할 수 있는지 여부 검사한다.
-    default boolean canHandler(Object event) {
-        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(EventHandler.class, this.getClass());
-        return typeArgs[0].isAssignableFrom(event.getClass());
-    }
+//    default boolean canHandler(Object event) {
+//        Class<?>[] typeArgs = TypeResolver.resolveRawArguments(EventHandler.class, this.getClass());
+//        return typeArgs[0].isAssignableFrom(event.getClass());
+//    }
 }
 ```
 
 ## 이벤트 디스패처인 Events 구현
 
 도메인을 사용하는 응용 서비스는 이벤트를 받아 처리할 핸들러를 Events.handler()로 등록하고, 도메인 기능을 실행한다.
+
+- 이벤트 핸들러 등록
+- 이벤트 핸들러 제거
+- 이벤트 핸들러에게 이벤트 전파
 
 ```java
 public class CancelOrderService {
@@ -230,6 +235,7 @@ public class CancelOrderService {
         );
 
         Order order = findOrder(orderNo);
+        // 도메인 기능 실행
         order.cancel();
 
         // ThreadLocal 변수를 초기화해서
@@ -245,6 +251,7 @@ public class Order {
         this.status = OrderStatus.CANCELED;
 
         // 이벤트 발생
+        // 디스패처에게 이벤트 전달
         Events.raise(new OrderCanceledEvent(number.getNumber()));
     }
 }
@@ -266,7 +273,8 @@ public class Events {
     };
 
     // 이벤트 처리
-    public static void raise(Object event) {
+    // 도메인으로 부터 이벤트 핸들러 전달 받음 
+    public static void raise(EventHandler event) {
         // 이벤트를 이미 출판 중이면 출판하지 않는다.
         // 이벤트 핸들러에게 이벤트를 출판하려 할 때 발생하는 무한 재귀 문제를 방지한다.
         if (publishing.get()) {
@@ -284,9 +292,10 @@ public class Events {
             }
 
             for (EventHandler handler : eventHandlers) {
-                if (handler.canHandle(event)) {
-                    handler.handle(event);
-                }
+//                if (handler.canHandle(event)) {
+                    // 이벤트 핸들러에게 이벤트 전파
+                  handler.handle(event);
+//                }
             }
             
         } finally {
@@ -360,7 +369,7 @@ _출처 Start DDD!_
 이벤트 핸들러를 별도의 스레드로 실행하는 방법이다.
 
 - java.util.concurrent.ExecutorService 활용
-- TimeOut 설정
+- 비동기 최대 응답 시간을 위한 TimeOut 설정
   - `executor.awaitTermination(10, TimeUnit.SECONDS)`
 
 비동기로 실행된 핸들러 로직은 별도의 스레드로 동작되기 때문에, 호출한 응용 서비스 메서드와 **서로 다른 트랜잭션 범위에서 실행된다.**
