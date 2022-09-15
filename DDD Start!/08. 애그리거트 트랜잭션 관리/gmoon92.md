@@ -153,6 +153,8 @@ JPA 는 강제로 버전 값을 증가시키는 잠금 모드를 지원하고 �
 
 ![Start DDD!](/img/start-ddd/offline-pessimistic-lock.png)
 
+_출처 Start DDD!_
+
 - 오프라인 선점 잠금은 여러 트랜잭션에 걸쳐 동시 변경을 막는다.
 - 오프라인 선점 잠금은 최대 대기 시간(timeout) 설정을 해야한다.
   - 조회 시점에 잠금 요청

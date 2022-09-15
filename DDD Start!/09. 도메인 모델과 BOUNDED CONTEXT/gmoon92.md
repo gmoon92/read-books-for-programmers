@@ -49,6 +49,8 @@ BOUNDED CONTEXT는 모델의 경계를 결정한다.
 
 ![Start DDD!](/img/start-ddd/bounded-context.png)
 
+_출처 Start DDD!_
+
 - 이상적으로 하위 도메인과 BOUNDED CONTEXT가 일대일 관계를 가지면 좋겠지만 현실은 그렇지 않을 때가 많다.
 - 하나의 BOUNDED CONTEXT 는 하나의 팀에만 할당되어야 한다.
   - 하나의 팀은 여러 개의 BOUNDED CONTEXT를 다룰 수 있다.
@@ -92,6 +94,8 @@ BOUNDED CONTEXT는 도메인 기능을 제공하는 데 필요한 요소를 모�
 각 BOUNDED CONTEXT는 도메인에 알맞은 아키텍처를 사용한다.
 
 ![Start DDD!](/img/start-ddd/bounded-context2.png)
+
+_출처 Start DDD!_
 
 - BOUNDED CONTEXT는 서로 다른 구현 기술을 사용할 수도 있다.
 - BOUNDED CONTEXT가 반드시 사용자에게 보여지는 UI를 가져야 하는 것은 아니다.
